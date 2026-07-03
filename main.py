@@ -1,6 +1,6 @@
 import random
 
-word_bank = ["python", "java", "apple", "cherry", "date", "fig", "mouse", "phone", "notebook", "fish", "tail"
+word_bank = ["python", "java", "apple", "cherry", "date", "fig", "mouse", "phone", "notebook", "fish", "tail"]
 random_word = random.choice(word_bank)
 
 guessed_letters = []
@@ -30,7 +30,7 @@ def reset_game():
 # Returns if user needs to guess again?
 def exception_handling(guess): #Add user input var for parameter
     if len(guess) != 1 or not guess.isalpha():
-    
+        pass
 
 print("Let's play hangman!")
 

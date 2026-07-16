@@ -44,24 +44,23 @@ guessed_letters = []
 lives = 6
 
 # Prints out the current string
-def print_current_string(guessed_letters=list[str]):
+def print_current_string(guessed_letters):
     current_string = ""
     
     for letter in random_word:
         if letter in guessed_letters:
-            current_string += letter
+            current_string += letter + " "
         else:
             current_string += "_ "
 
     print(current_string)
 
-def print_guessed_letters():
-    print(f"Guessed letters: {guessed_letters}")
 
 # Resets the game
 def reset_game():
     global random_word, guessed_letters, lives
     random_word = random.choice(word_bank)
+    guessed_letters = []
     lives = 6
 
 # Returns if user needs to guess again
@@ -74,17 +73,21 @@ def exception_handling(guess): # Add user input var for parameter
         return "good"
 
 print("Let's play hangman!")
-
 while True:
     print_current_string(guessed_letters)
     print(f"Lives left: {lives}")
     guess = input("Guess a letter: ").lower()
 
-    if exception_handling(guess) == "good":
+    result = exception_handling(guess)
+    if result != "good":
+        print(result)
+        continue
+
+    if result == "good":
         guessed_letters.append(guess)
 
         if guess not in random_word:
-            print(f"Sorry, {guess} not in random word")
+            print("Letter not found!")
             lives -= 1
 
         all_letters_guessed = True
@@ -96,17 +99,30 @@ while True:
         if all_letters_guessed:
             print(f"Congrats! YOU WIN!")
 
-            play_again = input("Play Again (y/n): ").lower()
+            while True:
+                play_again = input("Play Again? (yes/no): ").lower()
 
-            if play_again == "y":
-                reset_game()
-            else:
+                if play_again == "yes":
+                    reset_game()
+                    break
+                elif play_again == "no":
+                    break
+                else:
+                    print("Invalid input. Play again? (yes/no)")
+            if play_again == "no":
                 break
         
         if lives == 0:
             print(f"Game over! The word was {random_word}")
-            play_again = input("Play Again (y/n): ").lower()
-            if play_again == "y":
-                reset_game()
-            else:
+            while True:
+                play_again = input("Play Again? (yes/no): ").lower()
+
+                if play_again == "yes":
+                    reset_game()
+                    break
+                elif play_again == "no":
+                    break
+                else:
+                    print("Invalid input. Play again? (yes/no)")
+            if play_again == "no":
                 break
